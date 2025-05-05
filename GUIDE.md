@@ -25,10 +25,29 @@ Modelo de dados
 
  ROTAS PARA A APLICAÇÃO
 
- 1. POST biblioteca/usuario/cadastro
+ 1. POST biblioteca/usuarios/cadastro
+ -- cadastro dos usuários da biblioteca
 
  2. POST biblioteca/livros/cadastro
+ --cadastro dos livros da biblioteca
 
- 3. GET
+ 3. GET biblioteca/livros/listados
+ --lista de todos os livros cadastrados
+
+ 4. GET biblioteca/usuarios/listados
+ --lista de todos os usuarios cadastrados
+
+ 5. DELETE biblioteca/usuarios/:id
+ --deletar usuários
+
+ 6. DELETE biblioteca/livros/:id
+ --deletar livros
+
+ 7. PUT biblioteca/usuarios/:id
+ --atualização de usuario
+
+
+ 8. PUT biblioteca/livros/:id
+ --atualização de livros
 
 
