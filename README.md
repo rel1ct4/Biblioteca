@@ -29,7 +29,7 @@ Escola:
 (TO) CFP-Paraíso-Centro de Formação Profissional
 
 
-# **Restrições (O que a solução não pode ter):**
+# **Deve ter:**
 
 O sistema deve ser acessível tanto em dispositivos de desktop quanto móveis, garantindo flexibilidade para os usuários.
 Integração com sistemas de pagamento para o controle de multas e taxas de renovação.
