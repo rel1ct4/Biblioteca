@@ -1,5 +1,6 @@
 Modelo de dados
 1. Usuário
+  - idUsuario -> number
   - Nome -> String
   - email -> String 
   - CPF -> Number
@@ -7,6 +8,7 @@ Modelo de dados
   - Senha -> String
 
 2. Livros
+ - idLivro -> number
  - Marca -> String
  - Editora -> String
  - Referência -> number
@@ -22,6 +24,20 @@ Modelo de dados
  - Quantidade de livros na biblioteca -> number
  - emprestimos totais do livro -> number
  - emprestimos mensais -> number
+
+ 3. Empréstimo
+  - idUsuario ou cpf -> number
+  - idLivro -> number
+
+ 4. Reserva
+  - idUsuario ou cpf -> number
+  - idLivro -> number
+
+ 5. Multa
+  - idUsuario ou cpf -> number
+  - data -> number
+  - valor -> number
+  - motivo -> string
 
  ROTAS PARA A APLICAÇÃO
 
