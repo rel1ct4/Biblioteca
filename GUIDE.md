@@ -94,5 +94,6 @@ Modelo de dados
 25. GET biblioteca/multas/usuario/:usuarioId
 -- Lista todas as multas de um determinado usuário.
 
-26. PUT biblioteca/multas/:id/pagar -- Marca uma multa como paga.
+26. PUT biblioteca/multas/:id/pagar
+-- Marca uma multa como paga.
 
