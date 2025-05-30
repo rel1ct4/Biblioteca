@@ -254,11 +254,68 @@ app.post("/biblioteca/multas/registrar/:emprestimoId", async(req, res) => {});
 
 //lista um em especifico
 
-app.get("/biblioteca/usuarios/:id", (req, res) => {});
+app.get("/biblioteca/usuarios/:id", async (req, res) => {
+  const {id} = req.params
 
-app.get("/biblioteca/livros/:id", (req, res) => {});
+  try {
+    const data = await fs.readFile(url_database, 'utf-8')
+    const database = await JSON.parse(data)
 
-app.get("/biblioteca/emprestimos/:id", (req, res) => {});
+    const encontrarUsuario = database.users.find((user) => user.id === id)
+    if(!encontrarUsuario){
+      res.status(404).json({mensagem: "Usuário não encontrado"})
+      return
+    }
+
+    res.status(200).json({encontrarUsuario})
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({mensagem: "Internal server error"})
+  }
+});
+
+app.get("/biblioteca/livros/:id", async (req, res) => {
+  const {id} = req.params
+
+  try {
+    const data = await fs.readFile(url_database, 'utf-8')
+    const database = await JSON.parse(data)
+
+    const encontrarLivro = database.livros.find((livro) => livro.id === id)
+    if(!encontrarLivro){
+      res.status(404).json({mensagem: "Livro não encontrado"})
+      return
+    }
+
+    res.status(200).json({encontrarLivro})
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({mensagem: "Internal server error"})
+  }
+});
+
+app.get("/biblioteca/emprestimos/:id", async (req, res) => {
+  const {id} = req.params
+
+  try {
+  const data = await fs.readFile(url_database, 'utf-8')
+  const database = await JSON.parse(data)
+
+  const encontrarEmprestimo = database.find((emprestimo) => emprestimo.id === id)
+  if(!encontrarEmprestimo){
+    res.status(404).json({mensagem: "Empréstimo não encontrado"})
+    return
+  }
+
+  res.status(200).json({encontrarEmprestimo})
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({mensagem: "Internal server error!"})
+  }
+});
 
 app.get("/biblioteca/reservas/:id", (req, res) => {});
 
@@ -266,7 +323,7 @@ app.get("/biblioteca/multas/:emprestimoId", (req, res) => {});
 
 //atualiza as informações de determinado item
 
-app.put("/biblioteca/usuarios/:id", (req, res) => {});
+app.put("/biblioteca/usuarios/:id", async (req, res) => {});
 
 app.put("/biblioteca/livros/:id", (req, res) => {});
 
@@ -278,11 +335,85 @@ app.put("/biblioteca/reservas/:id", (req, res) => {});
 
 //deletar um item
 
-app.delete("/biblioteca/usuarios/:id", (req, res) => {});
+app.delete("/biblioteca/usuarios/:id", async (req, res) => {
+const {id} = req.params
 
-app.delete("/biblioteca/livros/:id", (req, res) => {});
+try {
 
-app.delete("/biblioteca/emprestimos/:id/devolucao", (req, res) => {});
+  const data = await fs.readFile(url_database, 'utf-8')
+  const database = await JSON.parse(data)
+
+  const indexUsuario = database.users.findIndex((usuario) => usuario.id === id)
+  if(indexUsuario === -1){
+    res.status(404).json({mensagem: "Usuário não encontrado"})
+    return
+  }
+
+  const removerUsusario = database.users.splice(indexUsuario, 1)[0]
+  console.log(removerUsusario)
+
+  fs.writeFile(url_database, JSON.stringify(database, null, 2), (err) => {
+    if(err){
+      console.log(err)
+      res.status(500).json({mensagem: "Erro ao ler arquivo"})
+      return
+    }
+
+    res.status(200).json({mensagem:"Participante removido",  usuario: removerUsusario})
+  })
+  
+} catch (error) {
+  console.log(error)
+  res.status(500).json({mensagem: "Internal server error"})
+}
+});
+
+app.delete("/biblioteca/livros/:id", async (req, res) => {
+  const {id} = req.params
+
+  try {
+    const data = await fs.readFile(url_database, 'utf-8')
+    const database = await JSON.parse(data)
+
+    const indexLivro = database.livros.findIndex((livro) => livro.id === id)
+    if(indexLivro === -1){
+      res.status(404).json({mensagem: "Livro não encontrado"})
+      return
+    }
+
+    const removerLivro = database.users.splice(indexLivro, 1)[0]
+    console.log(removerLivro)
+
+    fs.writeFile(url_database, JSON.stringify(database, null, 2), (err) => {
+      if(err){
+        console.log(err)
+        res.status(500).json({mensagem: "Erro ao ler arquivo"})
+        return
+      }
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({mensagem: "Internal server error"})
+  }
+  
+  res.status(200).json({mensagem: "Livro removido", usuario: removerLivro})
+});
+
+app.delete("/biblioteca/emprestimos/:id/devolucao", async (req, res) => {
+  const {id} = req.params
+
+  try {
+
+    const data = await fs.readFile(url_database, 'utf-8')
+    const database = await JSON.parse(data)
+
+
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({mensagem: "internal server error"})
+  }
+});
 
 app.delete("/biblioteca/multas/:id/pagar", (req, res) => {});
 
@@ -329,7 +460,7 @@ app.get("/biblioteca/livros/busca", async (req, res) => {
     res.status(200).json({ mensagem: "Livros encontrados", data: livrosFiltrados });
 
   } catch (error) {
-    console.error(error); // Use console.error para erros
+    console.error(error); 
     res.status(500).json({ mensagem: "Erro interno do servidor ao buscar livros." });
   }
 });
